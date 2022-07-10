@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ server }) => {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
@@ -24,6 +24,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>{title}</h1>
+        <h2>{server}</h2>
 
         <p className={styles.description}>
           Get started by editing{" "}
@@ -78,3 +79,11 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export async function getStaticProps(context) {
+  return {
+    props: {
+      server: process.env.NESTJS_HOST,
+    }, // will be passed to the page component as props
+  };
+}
