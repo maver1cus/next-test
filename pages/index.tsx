@@ -4,7 +4,17 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = ({ server }) => {
+type HomeProps = {
+  server: string;
+};
+
+export async function getStaticProps() {
+  return {
+    props: { server: process.env.NESTJS_HOST },
+  };
+}
+
+const Home: NextPage<HomeProps> = ({ server }) => {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
@@ -79,11 +89,3 @@ const Home: NextPage = ({ server }) => {
 };
 
 export default Home;
-
-export async function getStaticProps(context) {
-  return {
-    props: {
-      server: process.env.NESTJS_HOST,
-    }, // will be passed to the page component as props
-  };
-}
